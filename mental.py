@@ -10,9 +10,7 @@ from collections import Counter
 import os
 import csv
 
-# -----------------------------
-# Initialize DB
-# -----------------------------
+
 def init_db():
     conn = sqlite3.connect("emotions.db")
     c = conn.cursor()
@@ -35,9 +33,7 @@ def log_emotion(emotion, notes=""):
     conn.commit()
     conn.close()
 
-# -----------------------------
-#  Emotion Detection
-# -----------------------------
+
 emotion_messages = {
     "happy": "You seem happy. Keep smiling!",
     "sad": "It's okay to feel sad. You're not alone.",
@@ -83,9 +79,7 @@ def detect_emotion():
     cap.release()
     cv2.destroyAllWindows()
 
-# -----------------------------
-# Flask App (Web UI + Chatbot)
-# -----------------------------
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -215,9 +209,6 @@ def export_logs():
         writer.writerows(rows)
     return send_file("emotion_export.csv", as_attachment=True)
 
-# -----------------------------
-# Entrypoint
-# -----------------------------
 if __name__ == '__main__':
     init_db()
     t = Thread(target=detect_emotion)
